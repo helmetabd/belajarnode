@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// model Notes {
+//   id    String      @id @default(uuid())
+//   judul String      @db.VarChar(100)
+//   tags  NotesTags[]
+//   body  String      @db.VarChar(255)
+
+//   @@map("notes")
+// }
+
+// model Tag {
+//   id    Int         @id @default(autoincrement())
+//   name  String      @db.VarChar(10)
+//   notes NotesTags[]
+
+//   @@map("tag")
+// }
+
+// model NotesTags {
+//   id      Int     @id @default(autoincrement())
+//   note    Notes?  @relation(fields: [notesId], references: [id])
+//   tag     Tag?    @relation(fields: [tagsId], references: [id])
+//   notesId String?
+//   tagsId  Int?
+
+//   @@map("notes_tags")
+// }
+
+model Notes {
+  id    String @id @default(uuid())
+  judul String @db.VarChar(100)
+  tags  tags[]
+  body  String @db.VarChar(255)
+
+  @@map("notes")
+}
+
+model tags {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique @db.VarChar(10)
+  Notes Notes[]
+
+  @@map("tags")
+}
